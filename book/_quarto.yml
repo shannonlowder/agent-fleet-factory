@@ -1,0 +1,25 @@
+project:
+  type: book
+  output-dir: _book
+
+book:
+  title: "[Working name]"
+  author: "Shannon Lowder"
+  chapters:
+    - index.qmd
+    - chapters/01-from-prompting-to-a-factory/index.qmd
+
+format:
+  html:
+    theme: cosmo
+  pdf:
+    documentclass: scrbook
+  epub: default
+
+# Licence note shown in the front matter.
+license: "CC BY 4.0"
+
+# Local filter: includes a file into a code block by path and fails the build
+# if the file is missing (the quarto-ext extension only warns and skips).
+filters:
+  - filters/include-file.lua
