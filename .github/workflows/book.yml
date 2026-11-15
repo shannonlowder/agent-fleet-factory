@@ -35,3 +35,9 @@ jobs:
               exit 1
             fi
           done
+      - name: Assert the example listing was included
+        run: |
+          # The stub chapter includes examples/fleet-on-kind/kind-config.yaml by path.
+          # Check its content reached the rendered HTML, not just that the build passed.
+          grep -rl "kind.x-k8s.io/v1alpha4" book/_book --include='*.html' | grep -q . \
+            || { echo "::error::included listing not found in rendered HTML"; exit 1; }
