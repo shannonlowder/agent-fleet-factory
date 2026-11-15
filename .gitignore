@@ -1,0 +1,10 @@
+# Build outputs are release assets (attached to a GitHub Release by
+# .github/workflows/release.yml), never committed.
+book/_book/
+_site/
+.quarto/
+*.pdf
+*.epub
+
+# macOS
+.DS_Store

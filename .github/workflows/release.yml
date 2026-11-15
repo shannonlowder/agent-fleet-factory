@@ -1,0 +1,43 @@
+name: release
+
+on:
+  push:
+    tags: ['v*']
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: quarto-dev/quarto-actions/setup@v2
+        with:
+          tinytex: true
+
+      - name: Render book
+        run: quarto render book
+
+      - name: Zip site
+        run: |
+          cd book/_book
+          zip -r ../../site.zip . -x '*.pdf' '*.epub'
+          cd ../..
+          mv site.zip book/_book/site.zip
+
+      - name: Create GitHub Release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: ${{ github.ref_name }}
+        run: |
+          # v0.* are test pre-releases; v1.* and later are prod editions.
+          flags=()
+          case "$TAG" in
+            v0.*) flags+=(--prerelease) ;;
+          esac
+          shopt -s nullglob
+          assets=(book/_book/*.pdf book/_book/*.epub book/_book/site.zip)
+          gh release create "$TAG" "${assets[@]}" \
+            --title "$TAG" --generate-notes "${flags[@]}"
