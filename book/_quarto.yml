@@ -5,6 +5,9 @@ project:
 book:
   title: "[Working name]"
   author: "Shannon Lowder"
+  # Fixed file name for the PDF/EPUB, so release assets don't depend on the title
+  # (brackets in "[Working name]" broke the release upload as a glob).
+  output-file: "agent-fleet-factory"
   chapters:
     - index.qmd
     - chapters/01-from-prompting-to-a-factory/index.qmd
