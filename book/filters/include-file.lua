@@ -1,7 +1,7 @@
 -- include-file.lua: replace a code block's body with the contents of a file.
 -- Usage: ```{.yaml include="path/to/file" start-line=2 end-line=5}
--- Path is tried relative to the input document's directory, then the
--- current working directory. A missing file is a hard build error.
+-- Paths resolve against the book project dir (book/), since Quarto merges
+-- chapters into one document. A missing file is a hard build error.
 
 local function dirname(p)
   return (p:match("^(.*)/[^/]*$")) or "."

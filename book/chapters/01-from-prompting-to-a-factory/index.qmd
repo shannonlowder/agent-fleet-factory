@@ -9,7 +9,7 @@ This paragraph is a placeholder; the real chapter text has not been written yet.
 
 The cluster configuration below is included by path from `examples/`, not copied:
 
-```{.yaml include="../../../examples/fleet-on-kind/kind-config.yaml"}
+```{.yaml include="../examples/fleet-on-kind/kind-config.yaml"}
 ```
 
 ## Summary
