@@ -1,0 +1,17 @@
+# From prompting to a factory
+
+## In this chapter you will learn
+
+- Placeholder objective one.
+- Placeholder objective two.
+
+This paragraph is a placeholder; the real chapter text has not been written yet.
+
+The cluster configuration below is included by path from `examples/`, not copied:
+
+```{.yaml include="../../../examples/fleet-on-kind/kind-config.yaml"}
+```
+
+## Summary
+
+Placeholder summary. This stub exists to prove the build and the path-based include.

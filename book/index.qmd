@@ -1,0 +1,5 @@
+# Preface {.unnumbered}
+
+This is the stub front page of the book. The text is a placeholder.
+
+The book is licensed under CC BY 4.0.
