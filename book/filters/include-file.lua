@@ -20,6 +20,10 @@ local function resolve(path)
   if path:sub(1, 1) == "/" then
     table.insert(candidates, path)
   else
+    -- Quarto renders from a temp copy, so prefer its record of the real source file.
+    if quarto and quarto.doc and quarto.doc.input_file then
+      table.insert(candidates, dirname(quarto.doc.input_file) .. "/" .. path)
+    end
     local inputs = PANDOC_STATE and PANDOC_STATE.input_files
     if inputs and inputs[1] then
       table.insert(candidates, dirname(inputs[1]) .. "/" .. path)
