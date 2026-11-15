@@ -20,6 +20,12 @@ local function resolve(path)
   if path:sub(1, 1) == "/" then
     table.insert(candidates, path)
   else
+    -- Project dir first: the input file differs per format (chapter vs merged book).
+    local proj = (quarto and quarto.project and quarto.project.directory)
+      or os.getenv("QUARTO_PROJECT_DIR")
+    if proj then table.insert(candidates, proj .. "/" .. path) end
+    table.insert(candidates, path)
+  else
     -- Quarto renders from a temp copy, so prefer its record of the real source file.
     if quarto and quarto.doc and quarto.doc.input_file then
       table.insert(candidates, dirname(quarto.doc.input_file) .. "/" .. path)
