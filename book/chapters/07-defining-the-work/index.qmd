@@ -1,0 +1,9 @@
+# Defining the work
+
+## Outcome
+
+My hope is that, after reading this chapter, the reader can define a workload as a formal workflow with a stated purpose and a picture of how it works well vs. badly, with work items treated as untrusted input.  To get here, you have to be able to state the problem you’re trying to solve, then break it down into discrete steps and a map that takes you from beginning to end. You’ll have to spot places in the workflow where you may have to return to a prior step, skip steps, or call out to external processes.  This seems like a lot until you build your first few workflows.
+
+In this chapter, we’ll take a business process and break it down into these parts and map. By studying how to build this process, you should pick up how to build your own.
+
+But first, let’s talk about the patterns I use when breaking down the work.
