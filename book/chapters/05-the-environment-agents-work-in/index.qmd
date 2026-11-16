@@ -1,0 +1,29 @@
+# The environment agents work in
+
+::: {.callout-note}
+Draft brief, tier C: skeleton. Bullets and references compiled from source discussions 01–08 (2026-11-16). `[LAB n]`, `[RESEARCH]`, `[PLAN]` and `[VERIFY]` mark what is still open. `vault:` paths point into the Obsidian vault.
+:::
+
+**Outcome (draft, #3):** give agents a versioned, reproducible environment, so tools, credentials and CI behave the same at run time as in testing. Check: the environment is built from a pinned definition, and a drift check fails loudly.
+
+## Bullets available now
+- Opener: what the OpenAI guide leaves out that costs a first-fleet reader most is "environment reproducibility -- no gotchas at run time". Its agent is a model, tools and instructions, with no runtime under it (04).
+- Pin prompts, tools and configs by content hash and commit ID, with staged rollout and auto-rollback (OWASP ASI04, 07).
+- Pinning the workflow isn't pinning what it calls: images, config and fetched skills need their own pins (02).
+- Fail closed, don't degrade: GitHub's setup skips failed steps and works with whatever state it has (08).
+- Own the runtime: a vendor default moved on 2026-10-28, and the repo-owned setup and 28-day retention stopped applying (08).
+- Trade-off: `--bare` makes a run reproducible by dropping hooks and context files, so the reproducible mode loses the enforced rules (03).
+- "all code should assume something will break, or take too long to respond" (01).
+- The Clinejection chain links that live here: an arbitrary npm install and a shared cache (07).
+- Build vs buy, and prefer open source (05).
+
+## Placeholders (most of the chapter)
+- `[PLAN]` / `[VERIFY]` How the factory's environments are actually defined and pinned today, and whether a drift check exists. Sources 01–08 don't say.
+- `[PLAN]` "Techniques tried vs major harnesses" (ToC v2): no material in the discussions yet.
+- `[RESEARCH]` Source 09 (foundations first; IaC with drift detection; dedicated runner pools), source 12 (DORA: the platform as a shared, reproducible environment; the "ticket-ops" anti-pattern).
+
+## References
+- OpenAI, *A practical guide*: https://cdn.openai.com/business-guides-and-resources/a-practical-guide-to-building-agents.pdf
+- GitHub, customising the agent environment: https://docs.github.com/en/copilot/how-tos/copilot-on-github/customize-copilot/customize-cloud-agent/customize-the-agent-environment
+- OWASP ASI04 (supply chain): https://genai.owasp.org/resource/owasp-top-10-for-agentic-applications-for-2026/
+- Your notes: `vault: ideas/book-sources/discussions/04-openai-practical-guide`, `vault: ideas/book-sources/discussions/08-github-copilot-coding-agent`, `vault: ideas/book-sources/discussions/07-owasp-agentic-top10`

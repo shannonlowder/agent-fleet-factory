@@ -1,0 +1,38 @@
+# Measuring the factory
+
+::: {.callout-note}
+Draft brief, tier B. Bullets and references compiled from source discussions 01–08 (2026-11-16). `[LAB n]`, `[RESEARCH]`, `[PLAN]` and `[VERIFY]` mark what is still open. `vault:` paths point into the Obsidian vault.
+:::
+
+**Outcome (draft, #8, shared with ch 10):** the run record shows each human touch with its reason, and the intervention rate is reported.
+
+## The pattern
+- Outcomes, not completion: green CI or a merged PR is completion. Each run states an `intended_outcome` as a checkable claim, graded later as achieved, not_achieved or unknown (standing rule, 2026-11-06).
+- "if you fail to collect the data, you can never measure the data". Collect telemetry and trajectory from the first run (05).
+- "there should be multiple measurements, along with a testing harness that shows when results start trending good or bad… so you can make informed decisions on the data!" (02)
+- Runtime metrics detect "when the agent goes off the rails". It "requires regular study. it's own OODA loop" (01).
+- "repeating the same errors without taking those learnings back… hurts worse in terms of wasting tokens" (01). A prose prompt you can't trace or reproduce leaves nothing to measure against (01).
+- Store what you can act on, not everything: keep parameter names, and parameter values only where analysis proves them valuable (05).
+- Run records in two tiers, "like bronze/silver": the full redacted record in bronze until the retention policy, and a silver that is revised to keep the "proven" fields (05b, decision). Silver v1 is today's fields; promotion is decided by analysis "after we collect that data for a sprint or two" (05b).
+- Retention is "up to each org". The book gives the pattern, not a number (05b).
+- Tag every run's cost four ways (repo, issue, epic, requester), "that way you can attribute the cost at any level" (08). Compare GitHub, which bills one party per cost.
+- Estimates turn caps into a forecast you can grade against actuals (05).
+- From Cortex, unverified, not Shannon's words: capture the baseline before a change, measure per member rather than a fleet mean, and grade evidence as measured, replayed, estimated or hypothesis (02). `[VERIFY]` before using.
+
+## How I set it up
+- Interventions are recorded with a cause class (capability, skill, routing, quality, speed, policy) (standing rule, 2026-09-30). This is the measurement behind "the Hermes decline" in ToC v2.
+- Retention is unset today, so bronze is kept forever. "we should probably lower that to a year at some point" (05b). An honest "what I gave up".
+
+## What I use it for
+- The Forgejo volume trend, with all its caveats (`vault: ideas/book-evidence-2026-11` §2). Use it as the trend after the method was applied, not head-to-head with the Databricks numbers.
+
+## Placeholders
+- `[PLAN]` The October token data is held (01).
+- `[VERIFY]` Intervention counts and the "Hermes decline" figures; the agent-identity share vs the `lthorn` evidence rule (README).
+- `[LAB 4]` https://github.com/shannonlowder/agent-fleet-factory/issues/4 · `[LAB 50]` bad guidance found from harness metrics: https://github.com/shannonlowder/agent-fleet-factory/issues/50 · outcome grading and review metrics: https://github.com/shannonlowder/agent-fleet-factory/issues/24
+- `[RESEARCH]` Source 12 (DORA throughput and instability; rework and change failure rates), source 13 (LangChain: observability 89% vs evals 52%/37%), source 10 (MAST as the failure vocabulary), source 11 (METR selection effects: a warning for internal AI vs no-AI comparisons), source 09 (four metric categories to compare against).
+
+## References
+- Google, *Agents Companion* (telemetry, trajectory; call it DevOps, not "AgentOps"): https://www.kaggle.com/whitepaper-agent-companion
+- GitHub Copilot coding agent (how it attributes cost): https://docs.github.com/en/copilot/concepts/about-copilot-coding-agent
+- Your notes: `vault: ideas/book-sources/discussions/05-google-agents-companion`, `vault: ideas/book-sources/discussions/05b-run-record-gaps`, `vault: ideas/book-sources/discussions/02-anthropic-multi-agent-research`, `vault: ideas/book-sources/discussions/08-github-copilot-coding-agent`

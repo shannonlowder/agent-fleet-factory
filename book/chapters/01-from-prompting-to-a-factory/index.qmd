@@ -1,17 +1,38 @@
 # From prompting to a factory
 
-## In this chapter you will learn
+::: {.callout-note}
+Draft brief, tier A. Bullets and references compiled from source discussions 01–08 (2026-11-16). `[LAB n]`, `[RESEARCH]`, `[PLAN]` and `[VERIFY]` mark what is still open. `vault:` paths point into the Obsidian vault.
+:::
 
-- Placeholder objective one.
-- Placeholder objective two.
+**Outcome:** none yet. `docs/outcomes.md` starts at ch 3. `[PLAN]`
 
-This paragraph is a placeholder; the real chapter text has not been written yet.
+## The pattern
+- Settle the terms before teaching anything (01, 06):
+  - **Agent:** a container that performs one or more tasks reliably, "a highly simplified human" taught tasks over time.
+  - **Workflow:** the set of steps that together make one task.
+  - **Harness:** "the coding agent, agent loop or orchestrator (it's the wrapper around your workflow and prompts and tools)".
+  - Say how these differ from Anthropic's definition (code decides the path vs the model decides), so readers of that article aren't confused (01, Claude).
+- An agent doesn't need a model. The heuristics-only `pr-review` is an agent: "the model is just a tool". Agency is "the ability to go do something without relying on another person" (01).
+- "Agent, agency, etc, they are just this technology's words for automation. the same thing I've built for decades now." (01)
+- What the LLM adds: "the way to handle probabilities and variation", for "the parts of automation that aren't 100% if then, then that" (01).
+- The factory is CI/CD at agent velocity: "it's the same reason we build CICD -- it's just now we are building smarter guardrails and patterns to handle greater velocity" (03).
+- "Reliable", in the agent definition, is what the rest of the book measures (01).
+- No "AgentOps". Use DevOps and CI/CD terms; if the word appears, it comes with a joke that it's a hype word (05, decision).
+- How to read vendor sources: "when talking to a hammer sales person, they'll try to convince you everything is a nail" (01).
+- You're not starting from zero: "we know how it was done in the past… so we can PRIORITIZE reaching MVP over covering every theoretical" (06).
+- The book's purpose: "help others avoid mistakes I've made and build a better solution". The failures are the material (05).
 
-The cluster configuration below is included by path from `examples/`, not copied:
+## What I use it for (evidence)
+- **Databricks development work** (name nothing more specific: publication rule): 200 PRs in 14 days from 8 contributors. Asked for 3 significant changes in a 3-hour session, ours was the only team to finish all three through deployment (`vault: ideas/book-evidence-2026-11` §1).
+- The Forgejo trend: merged PRs per month went 118 (Jun) → 1,130 (Sep) → 1,030 (Oct). Give the reader the caveats with it (credential ≠ worker; merge-on-green; volume ≠ value) (§2).
 
-```{.yaml include="../examples/fleet-on-kind/kind-config.yaml"}
-```
+## Placeholders
+- `[PLAN]` The Copilot hand-off story (ToC v2 names it). There's no note on it in the sources 01–08 discussions, so tell it yourself.
+- `[VERIFY]` Does the agent-identity share (§2) include `lthorn`? If it does, it breaks the 2026-11-13 evidence rule. See the README.
+- `[RESEARCH]` The number of teams in the evaluation (open in book-evidence); the dates of the 14 days. Source 12 (DORA: "AI is an amplifier"; systems, not tools), source 11 (METR time horizons: why tasks need decomposition), source 13 (coding assistants are the top daily-use agent). The landscape search must be under 30 days old.
 
-## Summary
-
-Placeholder summary. This stub exists to prove the build and the path-based include.
+## References
+- Anthropic, *Building effective agents* (the terminology to contrast with): https://www.anthropic.com/engineering/building-effective-agents
+- HumanLayer, *12-Factor Agents* ("most production agents are mostly software"): https://github.com/humanlayer/12-factor-agents
+- OWASP (Least-Agency, "avoid unnecessary autonomy"): https://genai.owasp.org/resource/owasp-top-10-for-agentic-applications-for-2026/
+- Your notes: `vault: ideas/book-sources/discussions/01-anthropic-building-effective-agents`, `vault: ideas/book-sources/discussions/06-12-factor-agents`, `vault: ideas/book-evidence-2026-11`

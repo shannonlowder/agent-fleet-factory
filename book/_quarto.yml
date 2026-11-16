@@ -11,7 +11,17 @@ book:
   chapters:
     - index.qmd
     - chapters/01-from-prompting-to-a-factory/index.qmd
+    - chapters/02-your-first-fleet-on-kind/index.qmd
+    - chapters/03-the-model-is-not-the-agent/index.qmd
+    - chapters/04-the-harness-beats-the-model/index.qmd
+    - chapters/05-the-environment-agents-work-in/index.qmd
+    - chapters/06-identity-credentials-grants/index.qmd
     - chapters/07-defining-the-work/index.qmd
+    - chapters/08-knowing-its-done/index.qmd
+    - chapters/09-dividing-the-work/index.qmd
+    - chapters/10-humans-where-they-add-value/index.qmd
+    - chapters/11-measuring-the-factory/index.qmd
+    - chapters/12-changing-a-running-factory/index.qmd
 
 format:
   html:

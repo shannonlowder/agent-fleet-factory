@@ -1,0 +1,41 @@
+# Dividing the work
+
+::: {.callout-note}
+Draft brief, tier A. Bullets and references compiled from source discussions 01–08 (2026-11-16). `[LAB n]`, `[RESEARCH]`, `[PLAN]` and `[VERIFY]` mark what is still open. `vault:` paths point into the Obsidian vault.
+:::
+
+**Outcome (draft, #7):** the reader can split work so no agent approves its own output, choosing heuristics, decision models or LLMs for each step. Check: the author cannot merge, and the gate is rule-based.
+
+## The pattern
+- The author never approves its own PR. Assurance is its own reason to split: "vibes aren't a good reason to split or combine steps" (04). It holds even when one agent could do the whole job.
+- The hierarchy: mechanical checks, then decision models, then LLMs, "not only for speed, but for cost controls" (01).
+- An LLM judge is acceptable only as an opponent, "like a red-blue team or test vs dev teams where one LLM challenges another" (01).
+- Framing line: "cross checking is only rolling the dice twice, mechanical checks, and other guardrails can do more for reliability than simply making two llm calls" (05).
+- Separation of duties is per identity: "separate sessions, with separate credentials and separate containers" (03, decision). Claude's caveat: a separate identity isn't independent judgement when one author designed both steps.
+- Divide before the work starts, not at runtime: "trusting a roll of the dice (statistics) to split an epic into effective child tasks is a risk" (02). Refinement applies the org's values and knowledge base: "this increases reliability over vibes" (02).
+- Separated roles cost more tokens: "a balancing act". "All three do not need the highest expense model" (01).
+- Confidence ranks; it never authorizes. Counter-example: Google's response mixer picks among answers by each agent's self-reported confidence (05).
+- Heuristics have a hit ratio, and "that same data should be used to continue to improve that hit ratio!" (01)
+
+## How I set it up
+- For now the reviewer is mechanical, with no model: "we need a working factory before we add a bunch of extra requirements onto it" (03, decision).
+- The reviewer went to prod before being improved in dev, with a regression invariant: green PRs keep merging (03, decision).
+- It's built in stages: approve green PRs, then tiers, toward "the more complete reviewer" (05).
+
+## How I decided, and what I gave up
+- **Argue against the Google paper's uncited claim that more agents reduce hallucination, with fleet data** (05, decision). The variable is not how many agents there are. It's whether the checker is independent, sees the author's tree, and can block (05, Claude). Evidence codes E1 (9 of 12 change requests merged anyway), E3 (the reviewer ran out of turns, 3 of 3), B3 (tests ran on `main`), D1 (fakes built to pass the only gate).
+- How to read Anthropic's "most coding tasks" are a poor fit for multi-agent: that's one task shared at runtime. One agent per refined issue, many issues at once, is not what the article argues against (02).
+
+## Try it (kind)
+- Two identities. The author's merge is refused, and the gate is a rule, not a model.
+
+## Placeholders
+- `[VERIFY]` Find the record behind E1, E3, B3 and D1 before quoting them. They aren't in `vault: ideas/book-evidence-2026-11`. Also the 60–62% agreement figure for deterministic routing rules (issue 22): find it or drop it.
+- `[LAB 2]` https://github.com/shannonlowder/agent-fleet-factory/issues/2 · `[LAB 3]` https://github.com/shannonlowder/agent-fleet-factory/issues/3 · `[LAB 5]` https://github.com/shannonlowder/agent-fleet-factory/issues/5
+- `[RESEARCH]` Source 10 (MAST "incorrect verification", 9.1%), source 12 (DORA: the same pipeline for human and AI code; small batches), source 09 (branch protection; agent-specific labels).
+
+## References
+- Anthropic, *How we built our multi-agent research system*: https://www.anthropic.com/engineering/multi-agent-research-system
+- Google, *Agents Companion*, the foil: https://www.kaggle.com/whitepaper-agent-companion
+- OpenAI, *A practical guide* (its reasons to split): https://cdn.openai.com/business-guides-and-resources/a-practical-guide-to-building-agents.pdf
+- Your notes: `vault: ideas/book-sources/discussions/01-anthropic-building-effective-agents`, `vault: ideas/book-sources/discussions/02-anthropic-multi-agent-research`, `vault: ideas/book-sources/discussions/03-claude-code-best-practices`, `vault: ideas/book-sources/discussions/05-google-agents-companion`

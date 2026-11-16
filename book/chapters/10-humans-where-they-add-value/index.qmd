@@ -1,0 +1,46 @@
+# Humans where they add value
+
+::: {.callout-note}
+Draft brief, tier A. Bullets and references compiled from source discussions 01–08 (2026-11-16). `[LAB n]`, `[RESEARCH]`, `[PLAN]` and `[VERIFY]` mark what is still open. `vault:` paths point into the Obsidian vault.
+:::
+
+**Outcome (draft, #8, shared with ch 11):** the reader can put people only where they add value, and measure when and why they step in. Check: the run record shows each human touch with its reason, and the intervention rate is reported.
+
+## The pattern
+- Attention is the scarcest resource: "human attention is fragile saying that human is the solution is naive" (03).
+- The test for a human gate: can you write the automated rule that would make approving it every time unnecessary? "we require a human when the human adds value to the work" (03, decision). Spending is the example: pre-authorise a limit.
+- "injecting a human into a process for nothing more than a button press is WORSE than taking the human out of the loop" (01). The vendor agrees: "after the tenth prompt you start approving without reading" (03, source page).
+- Reversibility is the design rule: "nothing it does should be something we can't take back -- we use git, we use prs, we use releases". Anything a git revert can't undo is held for a human (03, decision).
+- Approve at the epic, not the decomposition: "otherwise thats like the PO approving each and every story" (03, decision).
+- The human enters at refinement, before the work, not as an approver after it (01). Where you don't know what to test, "that's where user acceptance testing comes in", and the findings return through the issue queue (02).
+- The approval ladder: "at first, the human, then after trust is gained, then you define and implement the deterministic gates with sampled audit, and perhaps eventually you reach fully agentic call (depending on the org's optmial point)" (04).
+- Trust accrues on any axis, measured: "you don't want to put in a human where trust can be measured, accrued and applied" (04). There is no single right point: "you need to be able to measure and decide where that optimal point is for your org" (04).
+- Contacting a human is "always the harnesses decision", so the harness can answer trivial questions itself "from any context it can reach", but "not from another model" for now (06).
+- A restart from zero is the human's call, but "it should never be prompted as a yes/no deicision for the human to simply agree with" (01).
+- The yardstick: a harness "should MAXIMIZE agency, and MINIMIZE the cognitive load of the human" (01).
+- "security that prevents legitimate use cases is not security -- it just encourages users to work around those protections" (07).
+
+## How I set it up
+- PR review "has been an evolution": from human-only approvals to "a reversibility - trust approach" (01). Show the path, not just the end state.
+- Today's state: approve green PRs, moving toward "simple green prs are allowed, and more significant prs get additional checks" (05). `[VERIFY]` the tier state on the day you draft (pr-review-v13 went live 2026-11-15, per `vault: meta/hot`).
+- Standing answers are recorded so no question is asked twice. Memory of past work is what keeps people from "answering the same question again and again" (07).
+
+## How I decided, and what I gave up
+- Rework the OpenAI guide's own examples: "I would ask if the human is really required in those examples… they didn't ask the right questions up front for their design and values" (04).
+- GitHub adds a human when no human asked: "That assumption doesn't hold when Copilot opens a pull request under its own app identity" (08). The factory removes humans by design (human by exception), so the chapter must say why that is safe.
+
+## Try it (kind)
+- The run record shows each human touch with its reason, and a report gives the intervention rate.
+
+## Placeholders
+- `[LAB 4]` Repeatability when answering from model-derived knowledge: https://github.com/shannonlowder/agent-fleet-factory/issues/4
+- `[LAB 48]` Governance drift after repeated success: https://github.com/shannonlowder/agent-fleet-factory/issues/48
+- `[PLAN]` The refinement agent is not in Argo yet. Approval rate and minutes per review (book plan §5) aren't collected yet. See https://github.com/shannonlowder/agent-fleet-factory/issues/24
+- `[RESEARCH]` Source 11 (METR Study B: self-reported speedup is unreliable), source 12 (DORA: "trust but verify"; friction moves to verification), source 09 (exception escalation after bounded retries).
+
+## References
+- OpenAI, *A practical guide to building agents* (its human-intervention examples): https://cdn.openai.com/business-guides-and-resources/a-practical-guide-to-building-agents.pdf
+- Claude Code best practices (living page; cite with the date read): https://code.claude.com/docs/en/best-practices
+- GitHub, *Risks and mitigations*: https://docs.github.com/en/copilot/concepts/agents/coding-agent/risks-and-mitigations
+- 12-Factor Agents, factor 7 (contact humans with tool calls), the foil: https://github.com/humanlayer/12-factor-agents
+- Your notes: `vault: ideas/book-sources/discussions/01-anthropic-building-effective-agents`, `vault: ideas/book-sources/discussions/03-claude-code-best-practices`, `vault: ideas/book-sources/discussions/04-openai-practical-guide`, `vault: ideas/book-sources/discussions/06-12-factor-agents`

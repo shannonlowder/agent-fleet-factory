@@ -1,0 +1,37 @@
+# Changing a running factory
+
+::: {.callout-note}
+Draft brief, tier B. Bullets and references compiled from source discussions 01–08 (2026-11-16). `[LAB n]`, `[RESEARCH]`, `[PLAN]` and `[VERIFY]` mark what is still open. `vault:` paths point into the Obsidian vault.
+:::
+
+**Outcome:** none yet. `[PLAN]` A candidate (Claude): a workflow change ships while runs are in flight; they finish on the old version, and a rollback is one pointer change.
+
+## The pattern
+- Don't start by building your own harness: "start from an existing harness, and concentrate on the workflows… once you nail that -- then you would be in a position to address failures or weaknesses in the harness itself" (06).
+- Pin a run to the definition it started on. In-flight runs "finish on the old version", and new code applies only to new runs (02).
+- Versioned, immutable workflow definitions make rollback a pointer change: a small fleet's answer to rainbow deployments (02, Claude).
+- Pinning the workflow isn't pinning what it calls. Images, config and fetched skills need their own pins (02).
+- The order of evidence for a change: a local replay first, then "monitor live runs in prod and watch the same metrics that drove the change" (02). Keep a small fixed replay set (02: "yes, it should"). The one exception is "the most cutting-edge private model", and even then "I would still trust the shape of the test".
+- Three phases of standing up a factory: the builder's judgement promotes an MVP; bug fixes follow; once it's stable, new requirements go "through the standard dev cycle workflows" (03, decision).
+- The MVP is one issue taken from ready to merged through the workflows. It's a walking skeleton: it proves the path, not its reliability (03).
+- A recorded trade-off is not governance drift: "this was a choice to say we reached MVP. not a permanent rule" (07).
+- The book reflects the current state until it goes to press (01).
+
+## How I set it up / how I decided (the story)
+- Three attempts: LangGraph, written from scratch, "failed, it was too much to build in one step"; then Hermes; then Argo workflows (06).
+- Why Argo: durability. A run survived an orchestrator restart, the failure that ended runs on both earlier harnesses (02, evaluation V4).
+- The Hermes freeze (2026-11-04): "we need to stop making changes to hermes, since I'm trying to get to the point where we can start writing argo workflows to replace hermes workflows!" (CLAUDE.md standing rule). A real freeze-then-migrate event.
+- The reviewer was promoted to prod before being improved in dev, with the invariant that green PRs keep merging (03).
+- The relief valve: "claude's bars are lower -- it's the relief valve that let's us keep making progress when our factory isn't built". The goal is to get "fully off claude" (03).
+- A vendor default moved under its users on 2026-10-28: the Copilot default environment became a GitHub-hosted sandbox (08). This is the case for owning your runtime.
+
+## Placeholders
+- `[PLAN]` The ending: the Hermes → Argo migration isn't finished. Write it to the current state and mark the date.
+- `[PLAN]` The refinement agent isn't in Argo yet ("stuck getting the main part of software factory working first", 01).
+- `[RESEARCH]` Source 09 (a maturity model as a staged-adoption frame), source 12 (DORA: rollback and revert as the safety net), source 11 (numbers go stale; METR's update notes).
+
+## References
+- Anthropic, *multi-agent research system* (rainbow deployments; small evaluation sets): https://www.anthropic.com/engineering/multi-agent-research-system
+- HumanLayer, *12-Factor Agents*: https://github.com/humanlayer/12-factor-agents
+- GitHub, customising the agent environment (the 2026-10-28 default change): https://docs.github.com/en/copilot/how-tos/copilot-on-github/customize-copilot/customize-cloud-agent/customize-the-agent-environment
+- Your notes: `vault: ideas/book-sources/discussions/02-anthropic-multi-agent-research`, `vault: ideas/book-sources/discussions/03-claude-code-best-practices`, `vault: ideas/book-sources/discussions/06-12-factor-agents`, `vault: ideas/book-sources/discussions/07-owasp-agentic-top10`

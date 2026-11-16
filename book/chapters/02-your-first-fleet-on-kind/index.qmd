@@ -1,0 +1,25 @@
+# Your first fleet on kind
+
+::: {.callout-note}
+Draft brief, tier C: write after the demo. Bullets and references compiled from source discussions 01–08 (2026-11-16). `[LAB n]`, `[RESEARCH]`, `[PLAN]` and `[VERIFY]` mark what is still open. `vault:` paths point into the Obsidian vault.
+:::
+
+**Outcome (implied by the ToC):** one issue in, one reviewed PR out, on kind. It's not in `docs/outcomes.md` yet. `[PLAN]`
+
+## Bullets available now
+- The demo ships an off-the-shelf harness, following the build-vs-buy advice, plus "a version of the issue-implement (and maybe other workflows) to help them understand how to implement their own versions". Shannon: "the plan" (06).
+- The demo flow (claim, implement, push, open PR, write the outcome) is the same flow as the control-flow lab, so the lab can reuse it (01, Claude). Shannon: "one that most of my readers are trying to solve!"
+- The readers bring container basics, CI/CD and git. Kubernetes knowledge isn't required: `make up` (interview).
+- State the pattern before the implementation (interview).
+
+## Placeholders
+- `[PLAN]` Everything else waits on `examples/fleet-on-kind` getting past its skeleton. Only the kind config exists today (issue 13 closed, a scaffold).
+- `[LAB 1]` https://github.com/shannonlowder/agent-fleet-factory/issues/1 (shares the flow).
+
+## References
+- Your notes: `vault: ideas/book-sources/discussions/06-12-factor-agents`, `vault: ideas/book-sources/discussions/01-anthropic-building-effective-agents`, `vault: ideas/book-proposal-interview-2026-11`
+
+## The kind cluster (included by path from `examples/`)
+
+```{.yaml include="../examples/fleet-on-kind/kind-config.yaml"}
+```

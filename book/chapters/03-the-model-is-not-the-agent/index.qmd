@@ -1,0 +1,38 @@
+# The model is not the agent
+
+::: {.callout-note}
+Draft brief, tier B. Bullets and references compiled from source discussions 01–08 (2026-11-16). `[LAB n]`, `[RESEARCH]`, `[PLAN]` and `[VERIFY]` mark what is still open. `vault:` paths point into the Obsidian vault.
+:::
+
+**Outcome (draft, #1):** keep a fleet working when a provider runs out of quota or goes down, within a token budget, with no lock-in. Check: kill a provider mid-run; the work completes on another, and spend stays under budget.
+
+## The pattern
+- "to build a workflow that requires a specific model to run is a sure sign that you're building the harness wrong… tight coupling leads to bad results" (02). The reader's test: can the workflow run on a different model?
+- Model changes are "a design time decision", not a runtime one, made by a measure-and-improve loop that keeps running (04). Contrast the OpenAI guide's one-off "baseline on the top model, then swap down".
+- Three layers, each changed at its own time: the workflow names a combo (design time), and a reviewed change sets the combo's members, outside runtime (04).
+- Pick the model class for the step: putting a coding LLM on a reasoning step shows "you lack an understanding of what the step does… you might as well choose an image generator model" (01).
+- Count accounts, not rungs. A fallback chain whose rungs share one credential fails as one unit (04, Claude, from the 2026-09-20 combo-guard measurement).
+- Ceiling vs budget: a ceiling is a crude stop so one issue can't drain the day; a budget is sized to what the issue is worth (02). And even that is "oversimplifying": "time, token, compute, etc all must be considered", and "not all companies will value those costs the same way" (02).
+- Budgets are counters in code that the model can see but not change. A plan may narrow a budget, never widen it (02, from the design).
+- FinOps is a thread through the whole book, not just this chapter (02).
+- Prefer open source, so you can contribute or fork. Build vs buy is decided by acceptance criteria: "why pay to reinvent that wheel?" (05)
+
+## How I set it up
+- 17+ providers plus local models, behind OmniRoute combos. `[VERIFY]` the count on the day.
+- A per-run token ceiling, 200,000 by default (02, from the design). `[VERIFY]` it's still current.
+- The replay set runs on local models, "so the costs are basically time and electricity" (02).
+
+## How I decided, and what I gave up
+- No per-issue budget yet: "setting a budget BEFORE we have a working product seems foolish at best, but it is something that should be built before we call our solution" complete (02).
+- How to read Anthropic's finding that token spend explains most of performance: it comes from a search benchmark. In the fleet, spend and result came apart (02, Claude). The supporting numbers are held (see below).
+
+## Placeholders
+- `[VERIFY]` Which token and spend controls exist or existed: per-role daily limits, per-run ceilings, per-key limits, and any ceiling across all runs on one issue (issue 22).
+- `[PLAN]` The October token data: "I'm not sure what point we are trying to make yet". It stays out until Shannon decides (01).
+- `[VERIFY]` The model-selection measuring script is propose-only, with no schedule found (04). Describe it as it stands.
+- `[RESEARCH]` Source 13 (LangChain: >75% of builders use multiple models; cost fading as a concern), source 11 (METR's 50% vs 80% horizons).
+
+## References
+- Anthropic, *How we built our multi-agent research system* (token spend vs performance): https://www.anthropic.com/engineering/multi-agent-research-system
+- OpenAI, *A practical guide* (model-selection procedure, the foil): https://cdn.openai.com/business-guides-and-resources/a-practical-guide-to-building-agents.pdf
+- Your notes: `vault: ideas/book-sources/discussions/02-anthropic-multi-agent-research`, `vault: ideas/book-sources/discussions/04-openai-practical-guide`, `vault: ideas/book-sources/discussions/01-anthropic-building-effective-agents`
