@@ -7,3 +7,37 @@ My hope is that, after reading this chapter, the reader can define a workload as
 In this chapter, we’ll take a business process and break it down into these parts and map. By studying how to build this process, you should pick up how to build your own.
 
 But first, let’s talk about the patterns I use when breaking down the work.
+
+## The pattern
+
+* Define work at the lowest level it can be defined: “triage an issue” or “make a code change”, not “a software developer” (01).
+* The path belongs in code, not the model. A workflow “shouldn’t be a vibe”. The order is heuristic, then decision model, then LLM (01). OWASP calls the same idea Least-Agency (07).
+```yaml
+spec:
+  entrypoint: main
+  serviceAccountName: argo-pr-review
+  imagePullSecrets:
+    - name: forgejo-registry
+  activeDeadlineSeconds: 900
+  affinity:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+          - matchExpressions:
+              - {key: kubernetes.io/hostname, operator: NotIn, values: [k3snode06]}
+  # The trigger-watch workflow reads finished pr-review Workflows for up to 12 h (its lookback-minutes).
+  ttlStrategy:
+    secondsAfterSuccess: 3600
+    secondsAfterFailure: 86400
+  arguments:
+    parameters:
+      - name: repo
+        value: ""
+      - name: number
+        value: ""
+      - name: head-sha
+        value: ""
+      - name: apply
+        value: "false"
+```
+
