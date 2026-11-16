@@ -11,6 +11,7 @@ book:
   chapters:
     - index.qmd
     - chapters/01-from-prompting-to-a-factory/index.qmd
+    - chapters/07-defining-the-work/index.qmd
 
 format:
   html:
