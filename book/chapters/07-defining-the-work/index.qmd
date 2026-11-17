@@ -1,42 +1,62 @@
-# Defining the work
+Ch 7 — Defining the work (tier A)
 
-## Outcome
+Outcome 
 
-My hope is that, after reading this chapter, the reader can define a workload as a formal workflow with a stated purpose and a picture of how it works well vs. badly, with work items treated as untrusted input.  To get here, you have to be able to state the problem you’re trying to solve, then break it down into discrete steps and a map that takes you from beginning to end. You’ll have to spot places in the workflow where you may have to return to a prior step, skip steps, or call out to external processes.  This seems like a lot until you build your first few workflows.
+I hope that, after reading this chapter, the reader can define a workload as a formal workflow with a stated purpose and a picture of how it works well vs. badly, with work items treated as untrusted input.  To get here, you have to be able to state the problem you’re trying to solve, then break it down into discrete steps and a map that takes you from beginning to end.  You’ll have to spot places in the workflow where you may have to return to a prior step, skip steps, or call out to external processes.  This seems like a lot until you build your first few workflows.
 
-In this chapter, we’ll take a business process and break it down into these parts and map. By studying how to build this process, you should pick up how to build your own.
+In this chapter, we’ll take a business process, break it down into these parts, and map it. By studying how to build this process, you should pick up how to build your own.
 
 But first, let’s talk about the patterns I use when breaking down the work.
 
-## The pattern
 
-* Define work at the lowest level it can be defined: “triage an issue” or “make a code change”, not “a software developer” (01).
-  I’m not a software developer, but I regularly take on the role.  So, using the software development factory is the most familiar workflow I can build on.
-* 
 
-* At the beginning of development, we start from a business request; it can be a feature request or a bug report.  In Scrum, we would force the user request into the form “as an x I want to y, so that I can z”.  The reason we did that was to capture the details around the request that would help us understand what the user wanted to happen.  It also leads to defining the definition of done and acceptance criteria. Without those, how do we know whether we can close that request?
-* That request, once recorded as an issue, used to go through a scrum master, so there was some sense that the issue was sufficiently complete even to ask the developer to take a look.  This scrum master review generally became known as triaging the issue.  That step ensured we had enough detail in the issue for the scrum master to bring it to sprint planning, and for the development team to help decide when to pull that work into a sprint (as well as estimate effort and informally decide who would work on the issue).  Once that issue was pulled into a sprint, that issue had passed the triaging state.
-* then the issue is picked up by the developer, who would make the changes and build or update tests to prove the code still works and that the acceptance criteria have been met.  They would also make sure they didn’t introduce additional bugs. They’d also assert their changes were clean (no new bad code smells), well formed, etc. Once all this was true, they’d submit their changes as a Pull Request (PR).
-* Then the PR would kick off automated tests/gates to verify the changes were good enough to be merged into the main or deployment branch.  A senior (or at least a different) developer would also review the changes to assess their quality.  And if the reviewer agreed with the developer that the changes were good and no regressions were introduced, then they would approve the PR.
-* That would then kick off the CD part of CICD.  The changes would be merged into a deployment branch, then promoted to the next environment (dev to test), and additional tests would kick off, such as Integration tests, User Acceptance testing, etc.  Once this environment change is approved, it will be promoted to the next environment.  And that cycle would repeat until the change made its way into production.  Each environment would generally have a human gate to approve promotion to the next environment, but otherwise deployments would be hands-off.
-* Somewhere in that CD process, the issue would be closed as solved.
-* Yes, that’s the golden path.  And yes, it might look a little different from your team's best practices, but if you’ve worked in any software development process, it should look familiar.
-* So when I suggest you look at the lowest-level part of a process you can think of, I would have you look at triage, development, or review as the first process you try to develop.  Don’t try to make a single workflow that takes an issue from creation all the way to deploy.  There are too many paths to consider, and it’s too big to tackle at once.  Consider that whole process your epic.  You need to break it down into smaller chunks (stories or issues).
+The pattern
 
-* The path belongs in code, not the model. A workflow “shouldn’t be a vibe”. The order is heuristic, then decision model, then LLM (01). OWASP calls the same idea Least-Agency (07).
-* 
 
-* So what do I mean here?  Easy: think of any of those processes as a flowchart.  However you define that flowchart for your agent, it needs to be in code.  Code that you version control, test, deploy, etc., and no, a prompt isn’t what I’m meaning here.  Your code should be in a language to programmatically define, state, logic, flow control, etc.  I’m not going to prescribe a language or library here.  
-* I’ve attempted this in Python langgraph, yaml (skills), and I even tried rolling my own from scratch in Python without a predefined library. They each had different levels of success.  My current version is back to yaml for Argo workflows.  Argo does a lot of the heavy lifting when it comes to state and flow control, but that yaml is my code.
-* Let’s walk through an Argo workflow that is currently in production doing real work
+Define work at the lowest level it can be defined: “triage an issue” or “make a code change”, not “a software developer” (01).  I’m not a software developer, but I regularly take on the role.  So, using the software development factory is the most familiar workflow I can build on. 
+
+
+At the beginning of development, we start from a business request; it can be a feature request or a bug report.  In Scrum, we would force the user request into the form “as an x I want to y, so that I can z”.  The reason we did that was to capture the details around the request that would help us understand what the user wanted to happen.  It also leads to defining the definition of done and acceptance criteria. Without those, how do we know whether we can close that request?
+
+
+That request, once recorded as an issue, used to go through a scrum master, so there was some sense that the issue was sufficiently complete even to ask the developer to take a look.  This scrum master review generally became known as triaging the issue.  That step ensured we had enough detail in the issue for the scrum master to bring it to sprint planning, and for the development team to help decide when to pull that work into a sprint (as well as estimate effort and informally decide who would work on the issue).  Once that issue was pulled into a sprint, that issue had passed the triaging state.
+
+
+then the issue is picked up by the developer, who would make the changes and build or update tests to prove the code still works and that the acceptance criteria have been met.  They would also make sure they didn’t introduce additional bugs. They’d also assert their changes were clean (no new bad code smells), well formed, etc. Once all this was true, they’d submit their changes as a Pull Request (PR).
+
+
+Then the PR would kick off automated tests/gates to verify the changes were good enough to be merged into the main or deployment branch.  A senior (or at least a different) developer would also review the changes to assess their quality.  And if the reviewer agreed with the developer that the changes were good and no regressions were introduced, then they would approve the PR.
+
+
+That would then kick off the CD part of CICD.  The changes would be merged into a deployment branch, then promoted to the next environment (dev to test), and additional tests would kick off, such as Integration tests, User Acceptance testing, etc.  Once this environment change is approved, it will be promoted to the next environment.  And that cycle would repeat until the change made its way into production.  Each environment would generally have a human gate to approve promotion to the next environment, but otherwise deployments would be hands-off.
+
+
+Somewhere in that CD process, the issue would be closed as solved.
+
+
+Yes, that’s the golden path.  And yes, it might look a little different from your team's best practices, but if you’ve worked in any software development process, it should look familiar.
+
+
+So when I suggest you look at the lowest-level part of a process you can think of, I would have you look at triage, development, or review as the first process you try to develop.  Don’t try to make a single workflow that takes an issue from creation all the way to deploy.  There are too many paths to consider, and it’s too big to tackle at once.  Consider that whole process your epic.  You need to break it down into smaller chunks (stories or issues).
+
+
+The path belongs in code, not the model. A workflow “shouldn’t be a vibe”. The order is heuristic, then decision model, then LLM (01). OWASP calls the same idea Least-Agency (07).
+
+
+So what do I mean here?  Easy: think of any of those processes as a flowchart.  However you define that flowchart for your agent, it needs to be in code.  Code that you version control, test, deploy, etc., and no, a prompt isn’t what I’m meaning here.  Your code should be in a language to programmatically define, state, logic, flow control, etc.  I’m not going to prescribe a language or library here.  
+
+
+I’ve attempted this in Python langgraph, yaml (skills), and I even tried rolling my own from scratch in Python without a predefined library. They each had different levels of success.  My current version is back to yaml for Argo workflows.  Argo does a lot of the heavy lifting when it comes to state and flow control, but that yaml is my code.
+
+
+Let’s walk through an Argo workflow that is currently in production doing real work
 
 pr-review-v13
 
 The first 300 lines are comments, along with a text changelog that augments the changes tracked in the repo for the first 1 version of this workflow
 
-then the next 35 are metadata and workflow-level specifications
+then the next 35 are metadata and workflow-level specifications 
 
-```yaml
 spec:
   entrypoint: main
   serviceAccountName: argo-pr-review
@@ -63,7 +83,8 @@ spec:
         value: ""
       - name: apply
         value: "false"
-```
+
+
 
 You can see the service account name used to run this spec — this is how I control what rights and permissions the agent running this workflow has. (defined first in  authentik and then other permissions applied across my environment)
 
@@ -75,8 +96,134 @@ retention: how long do we keep run details before we delete them (this is the ru
 
 parameter - what are the variables I can pass in, eg what repo and PR number does the workflow review, what is the head SHA value we want to compare this PR to (what branch are we going to merge into if the pr passes), apply, do we apply the changes automatically if cicd is green
 
+
+
 The next section is the templates section — main is the five sequential steps of a pr review: gather, route, classify, decide, and act.
+
+
 
 As you read through each of them, you can see how the workflow is to be run.  What parameters are passed into each step, which steps to run, and what to output from each step (both artifacts and output parameters). Note these steps are mechanical, but within each step you can find mechanical or heuristic code, or you could see a step call a decision model or an LLM model. But note the steps and how each one flows to the next is what we want to put into our workflow repository.
 
+
+
 << I might want to include more details about pr reveiew here for clarity >>
+
+
+Framing line: “Could an LLM follow a workflow, maybe, would it be repeatable and reliable, maybe. don’t build your business on maybes.” (01)
+
+
+What I want to say here is: could you define this as a prompt? Sure. But then you have less control over HOW the LLM moves from one step to the next.  At the end of the day, the LLM is a fancy many-sided die.  Roll it once, get a number, roll it a second time, are you going to get that same number? Probably not.  Business processes cannot be built on odds.  Well, they could, but then that business isn’t going to last very long, now is it?
+
+
+Variable content, prescriptive method: “determining what files to change are variable – determining HOW to choose those files does not change very much with each issue” (01).
+
+
+what I’m trying to say here is that the process of making a file edit is the same every time: you want to add, change, or delete text in a given file.  Where you want to make that change is a parameter. What you want to add or delete, and where you want to make that change, is a variable. 
+
+
+The more prescriptive you can be on HOW to make that change, the less chance the LLM has to make a hallucinated edit.  And as you go from simple file edits to making changes that can impact your business, the less you want to rely on odds to see you through successfully, and the more you want CERTAINTY in those changes.
+
+
+The steps are decided when the process is defined, not at runtime: “the factory is your stated pattern; how can you build before you know what you are building?” (01)
+
+
+You want changes to your workflows to go through CICD like you do all your code changes. With that, you know exactly which version of your workflow made the change, and you also have measurements that can narrow down the problem when the workflow does something unexpected. You can trace your workflow just like code — eventually, you can do so by running your code in debug mode. Once you have that level of control, improvements to your process become surgical in precision.
+
+
+Dynamic for exploring, declared for relying: “as you need to rely on that workflow – vibes won't cut it” (04). Declared structure is what makes runs comparable: “otherwise how can you measure a good pass versus a bad pass?” (04)
+
+
+You can use a model to help you break down your process and even run early tests to see if you have enough of it defined to encode it in your agentic harness.  Consider those early runs exploratory — but the goal is to get to a versionable workflow as quickly as you can — again, consider the strengths of debug mode — the longer you stick with chat mode, the longer you go without precise measurements of exactly HOW the agent made the changes you asked it to make.
+
+
+Retry, step back, and restart from zero are three different moves, and the workflow definition names each one. A changed assumption is a step back, and “something the human decides if that is allowed or not” (01).
+
+
+
+
+
+A ready work item needs at least two fields: what is requested, and acceptance criteria. Coach the reader to add more, saying why each earns its place (05, decision). Candidates: target area and a reproduction of the bugs.
+
+
+Untrusted becomes trusted: “initial issues are untrusted – but they work through workflows to become trusted” (06). Typed fields carry policy; prose is data (interview A4.2).
+
+
+Make values explicit, lightly: “if you can’t define what makes the process your way, then how do you expect a machine to replicate that?” (01). Value-driven development stays out of the weeds and may become its own book.
+
+
+You are not starting from zero. Agentic workflows replace parts of a human process, so prioritize failures the process already knows (06).
+
+How I set it up
+
+
+The flow: find open issues → work out where each one is → a complete issue moves on, an incomplete one goes to a scrum-master-like refinement agent → plan → implement → PR (01). Describe refinement as underway, at its stage on the day (05: “assume this work is underway”). [PLAN] State its actual stage when you draft.
+
+
+The issue tracker is the only record of an issue’s state. Only deterministic, trusted steps write state as a typed block in a status comment; look-alikes from other identities are ignored. No model-facing step holds a tracker credential (06).
+
+
+From inferring state to writing it: state guessed from branch names, PR text, and labels hid 31 of 49 ready issues (06, “how I decided”). [VERIFY] the 31/49 figure at its record.
+
+
+.forgejo/ and .github/ are protected paths so that CI can run unattended: a gate on the path, not on the run (08).
+
+How I decided, and what I gave up
+
+
+A deterministic readiness check finds that an acceptance section exists, not that it can be checked (05, Claude).
+
+
+An issue edited after it was promoted to trusted is a known gap, deferred past MVP: “valid, and we need to protect against that later” (06). Human teams catch the same failure at sprint demo day.
+
+
+The factory has no estimate fields yet (cost, duration). Adding them would turn caps into a forecast that can be graded (05).
+
+What I use it for
+
+
+Opener: Clinejection, taken link by link against the factory: an untrusted title, Bash, an arbitrary npm install, a shared cache, shared nightly and production tokens (07). Teach the chain, not the vendor. GitPublic is the fallback (07). [VERIFY] the write-ups first (issue 19). Don’t use the “~4,000 machines in 8 hours” figure, which isn’t in the primary sources.
+
+Try it (kind)
+
+
+The intake refuses a non-work item and an injected instruction before any model call.
+
+Placeholders
+
+
+[LAB 1] Path-departure rates, model-held vs code-held control flow: https://github.com/shannonlowder/agent-fleet-factory/issues/1
+⁠
+⁠
+
+
+[LAB 3] Decomposition, a bare prompt vs refinement with org values: https://github.com/shannonlowder/agent-fleet-factory/issues/3
+⁠
+⁠
+
+
+[RESEARCH] Source 09 (the “spec maturity curve”; issue text as an injection vector), source 10 (MAST spec disobedience, 11.8%), source 11 (METR: keep tasks short).
+
+References
+
+
+Anthropic, Building effective agents: https://www.anthropic.com/engineering/building-effective-agents
+⁠
+. Cite it as vocabulary from an interested party (01).
+
+
+OpenAI, A practical guide to building agents: https://cdn.openai.com/business-guides-and-resources/a-practical-guide-to-building-agents.pdf
+⁠
+. Its code-first stance is the foil.
+
+
+HumanLayer, 12-Factor Agents, factor 5: https://github.com/humanlayer/12-factor-agents
+⁠
+. License question open on issue 19.
+
+
+OWASP Top 10 for Agentic Applications 2026 (ASI01, goal hijack): https://genai.owasp.org/resource/owasp-top-10-for-agentic-applications-for-2026/
+⁠
+⁠
+
+
+Your notes: [[…/book-sources/discussions/01-anthropic-building-effective-agents]], [[…/book-sources/discussions/05-google-agents-companion]], [[…/book-sources/discussions/06-12-factor-agents]], [[…/book-sources/discussions/07-owasp-agentic-top10]]
