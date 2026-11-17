@@ -139,9 +139,6 @@ You can use a model to help you break down your process and even run early tests
 Retry, step back, and restart from zero are three different moves, and the workflow definition names each one. A changed assumption is a step back, and “something the human decides if that is allowed or not” (01).
 
 
-
-
-
 A ready work item needs at least two fields: what is requested, and acceptance criteria. Coach the reader to add more, saying why each earns its place (05, decision). Candidates: target area and a reproduction of the bugs.
 
 
