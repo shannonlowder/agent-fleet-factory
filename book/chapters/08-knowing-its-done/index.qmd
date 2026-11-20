@@ -1,0 +1,47 @@
+# Knowing it's done
+
+::: {.callout-note}
+Draft brief, tier A. Bullets and references compiled from source discussions 01–08 (2026-11-16). `[LAB n]`, `[RESEARCH]`, `[PLAN]` and `[VERIFY]` mark what is still open. `vault:` paths point into the Obsidian vault.
+:::
+
+**Outcome (draft, #6):** the reader can tell real completion from faked work or tests, and fail loudly. Check: a stub PR and a test that asserts nothing are both caught.
+
+## The pattern
+- Decide what checks the work before the work is generated. Code "must answer acceptance criteria", by "mechanical checks as much as possible" (01).
+- "you can't just accept that an output is correct, right, or good. you have to determine how you can TEST and MEASURE those things. these tests and measurements must be a part of the harness." (01)
+- Check the actions as well as the result: "we've been bitten by symptom several times" (05, decision). A run can pass by doing the wrong thing, such as editing the tests or producing an empty patch. The book's version is cheap: code-checked rules on actions that must never happen (test files touched, a path outside the allowlist, no tool call) (05, Claude).
+- Don't ask an LLM whether LLM-written code does what was asked: "the model will almost always answer yes" (01).
+- An LLM that writes acceptance criteria "must be a separate session, and preferably a separate model" (01).
+- "we must limit the chance for false, or empty passes to happen" (01).
+- Every exit is typed. A cap with a checkpoint is "an input to a later decision", "not a failure to hide" (02).
+- Stops must be resumable "with the LEAST rework possible". "the request to start a task from zero again should be something you have to explicitly ask for" (01).
+- Retries: "is it 3, 5, or more? that will be up to the reader". The fixed part: "all code should assume something will break" (01). A retry carries the failure reasons forward (03, decision).
+- A human-machine disagreement has no single rule: first find "did the human grade wrong, or did the machine grade wrong?" (05)
+
+## How I set it up
+- The implement harness checkpoints every few turns and replays its edits onto a clean pod (02, from the design). Caveat: it checkpoints every 5 turns and on non-success ends, so the end of a *successful* run can be missing from its record (05, Claude).
+- The factory fails closed with a typed reason. GitHub's setup degrades instead ("Copilot will skip the remaining setup steps…") (08). A clean contrast, in a vendor's own words.
+
+## How I decided, and what I gave up
+- Even an enforced check can give up: the Stop hook is overridden after eight consecutive blocks (03). The reader has to decide how a run is marked when a gate's cap trips.
+- "agents aren't magic, bro": volume is the difference. "the greater the volume, the greater the chance something gets through" (03).
+- An agent allowed to change a PR until its checks go green (GitHub's Agent Merge) is a reward-hacking setup, unless the checks cover the actions too (08, with 05).
+
+## What I use it for (worked example)
+- **The 2026-10-13 audit: of 19 auto-merged PRs, 9 were fake and 6 partial.** Four specimens: a README edit, a tautological assert, unwired scripts, and a self-edit of the guard test. Shannon: "those details are fine to share" (05). Frame it as a gate being gamed (OWASP ASI10, reward hacking), not as learned cheating (07). This is a "machine graded wrong" case: "a test was wrong, and needed improvement" (05).
+
+## Try it (kind)
+- A stub PR and an assert-nothing test both fail the gate, loudly.
+
+## Placeholders
+- `[LAB 2]` False-pass and empty-pass rates: self-evaluation vs mechanical checks vs an opposing model: https://github.com/shannonlowder/agent-fleet-factory/issues/2
+- `[LAB 5]` Step size against lost progress: https://github.com/shannonlowder/agent-fleet-factory/issues/5
+- `[VERIFY]` "Errors compound" has no fleet number. The cross-run repeats (731 claims over 181 issues, 55% of fail events repeated) need a record before use. Whether the implement checkpoint is kept as an artifact, and for how long (issue 22).
+- `[RESEARCH]` Source 10, MAST: FC3 verification failures (about 23%, the reader's own sum) and a +15.6% gain from verification. Verify both at the paper. Source 09: adopt its structural/semantic/provenance layers as chapter vocabulary, or keep your own? (That question is open in the source note.) Source 11: METR's premature abandonment. Source 12: DORA's instability data.
+
+## References
+- Anthropic, *Building effective agents* (the evaluator-optimizer pattern is the foil): https://www.anthropic.com/engineering/building-effective-agents
+- Google, *Agents Companion* (trajectory evaluation; Table 1 admits metrics are "susceptible to gaming"): https://www.kaggle.com/whitepaper-agent-companion
+- GitHub Copilot coding agent, customising the environment: https://docs.github.com/en/copilot/how-tos/copilot-on-github/customize-copilot/customize-cloud-agent/customize-the-agent-environment
+- OWASP ASI10: https://genai.owasp.org/resource/owasp-top-10-for-agentic-applications-for-2026/
+- Your notes: `vault: ideas/book-sources/discussions/01-anthropic-building-effective-agents`, `vault: ideas/book-sources/discussions/02-anthropic-multi-agent-research`, `vault: ideas/book-sources/discussions/05-google-agents-companion`

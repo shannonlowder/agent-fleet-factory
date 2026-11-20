@@ -1,0 +1,41 @@
+# Identity, credentials and grants
+
+::: {.callout-note}
+Draft brief, tier A. Bullets and references compiled from source discussions 01–08 (2026-11-16). `[LAB n]`, `[RESEARCH]`, `[PLAN]` and `[VERIFY]` mark what is still open. `vault:` paths point into the Obsidian vault.
+:::
+
+**Outcome (draft, #4):** the reader can give each agent its own identity with least-privilege, short-lived credentials. Check: two agents, two identities; a token expires; an out-of-scope call is refused.
+
+## The pattern
+- Risk comes from the combination, not the tool. Shannon's `rm` example: with read-only permission, "nothing happens -- no risk"; with read/write, "it is deleted, risk"; as sudo, "you could delete everything, greatest risk" (04).
+- A denied action does no harm but is still a signal. Record it (04, Claude).
+- Trust widens on a measured axis: target, permission and so on. "take a measured approach to trust" (04). Widening "IS reviewed outside runtime". A manager agent may suggest widening for others, but "it can be dangerous to allow that agent to widen its own permission" (04).
+- Against agents widening each other's grants in turn: "there needs to be a control that can detect this work". Centralise the decision, and allow changes "only… between version releases of your workflow" (04).
+- Secrets: "the secrets should be held out of everything. they should only be injected for use, and never in a way that could leak". Use throwaway secrets that are "useless if they were leaked" (05).
+- The PCI analogy: store the provider's transaction id, never the card number. For agents, store a reference to the secret's source and the run's ids, never the value (05).
+- Scan proactively, not only by known value: "i would prefer the more proactive secret scan" on everything a tool returns (05b, decision).
+- Orchestrators mediate keys. OWASP: "Keys must never be directly available to agents" (07). The factory already works this way: no model-facing step holds a tracker credential (06).
+- The reader owns identity, grants and secrets handling, whatever platform they buy (05, Claude). The Google paper's advice is to buy a platform's controls.
+
+## How I set it up
+- Four containment layers, each checked separately (03, Claude): the tool allowlist; privilege and filesystem; network egress; credential scope and lifetime. The fleet had the first two, while the loop pod had open egress and an unscoped key. Filed as iac/argo-workflows issues 120–124. `[VERIFY]` their state on the day.
+- **tokensmith**, in Shannon's words: "i built tokensmith because you suck when it comes to secrets -- so we rotate them so regularly your constant abuse of trust is minimized" (01). Don't rely on the agent to keep a secret; rotate so often that a leaked one is nearly worthless.
+
+## How I decided, and what I gave up
+- Shannon admits he hasn't fully reached the ideal, "since I continue to use Claude desktop to perform work" (05). An honest "what I gave up".
+- An egress control is only as wide as the processes it sees. GitHub's firewall covers the agent's Bash tool, not MCP servers or setup steps, and "should not be considered a comprehensive security solution" (08).
+
+## Try it (kind)
+- Two agents with two identities. A short-lived token expires mid-run, and an out-of-scope call is refused and recorded.
+
+## Placeholders
+- `[VERIFY]` Can the grant catalog detect chained or reciprocal widening? (issue 22)
+- `[VERIFY]` OWASP quotes: re-read the full PDF, since the first read was partial (issue 19).
+- `[RESEARCH]` Source 09 (attestation binding a commit to the agent, model version, spec and human; SLSA/Sigstore), source 13 (LangChain: security ranks only second among large firms, 24.9%).
+- `[PLAN]` Injection protection runs through chs 6, 7 and 9 (interview A4.2). Decide how much of the Clinejection chain sits here and how much in ch 7.
+
+## References
+- OWASP Top 10 for Agentic Applications 2026 (ASI03 identity and privilege abuse; ASI02 tool misuse): https://genai.owasp.org/resource/owasp-top-10-for-agentic-applications-for-2026/
+- GitHub, *Risks and mitigations* (the firewall's limits): https://docs.github.com/en/copilot/concepts/agents/coding-agent/risks-and-mitigations
+- OpenAI, *A practical guide* (rates risk by tool; the foil): https://cdn.openai.com/business-guides-and-resources/a-practical-guide-to-building-agents.pdf
+- Your notes: `vault: ideas/book-sources/discussions/04-openai-practical-guide`, `vault: ideas/book-sources/discussions/05-google-agents-companion`, `vault: ideas/book-sources/discussions/05b-run-record-gaps`, `vault: ideas/book-sources/discussions/03-claude-code-best-practices`

@@ -1,0 +1,28 @@
+# The harness beats the model
+
+::: {.callout-note}
+Draft brief, tier C: skeleton. Bullets and references compiled from source discussions 01–08 (2026-11-16). `[LAB n]`, `[RESEARCH]`, `[PLAN]` and `[VERIFY]` mark what is still open. `vault:` paths point into the Obsidian vault.
+:::
+
+**Outcome (draft, #2):** show that a harness change beats a model change for a given task, and pick the cheapest model that passes. Check: a naive vs an adjusted harness over the same cases; the report names the winner.
+
+## Bullets available now
+- Definition: "harness is the coding agent, agent loop or orchestrator (it's the wrapper around your workflow and prompts and tools)" (06).
+- The yardstick: a harness "should MAXIMIZE agency, and MINIMIZE the cognitive load of the human. everything less than that shows the harness has room for improvement (and self-improvement!)" (01).
+- Tests and measurements "must be a part of the harness" (01).
+- Encode preferences so the model can't ignore them. This answers the vendor's advice to delete hooks that only encode preferences: "the trick with a good framework is to encode your preferences in a way the model can't ignore" (03).
+- Answer, don't ignore, the vendor's counter-position: "With the actual code in front of it, Claude is usually better placed to make that call than a rule you wrote in advance" (03, source page). Shannon's setup has 26 hooks.
+- Moving a rule from the prompt into the harness is a measured decision: "we should be able to correlate prompt changes into harness changes" (03).
+- Vocabulary: the page's two-column table of what the model reads vs what the harness executes. It's a vendor framing with no data (03).
+- An agent must not be able to write its own harness config. CVE-2026-25725 (Claude Code `settings.json` hooks), CVE-2026-26268 (Cursor git hooks), the IDEsaster series (07). `[VERIFY]` the CVE numbers at NVD.
+- What I gave up: builders over-build controls, and the owner removes them. The content gate and the protected-path skip rule were both removed on 2026-11-12 (03, Claude).
+
+## Placeholders (most of the chapter)
+- `[RESEARCH]` "Shannon's harness research" (ToC v2). It isn't in the sources 01–08 discussions; point to where it lives.
+- `[LAB 50]` The bad-guidance lab (03): plant bad guidance in the base prompt and measure which parts are bad: https://github.com/shannonlowder/agent-fleet-factory/issues/50
+- `[RESEARCH]` Source 11 (METR scaffold sensitivity, Vivaria vs Inspect), source 12 (DORA: the system, not the model, decides results), source 09 (the repo instruction file as a prompt-side control to contrast with), source 10 (MAST FC1: loop limits and exit criteria).
+
+## References
+- Claude Code best practices (living page; date it): https://code.claude.com/docs/en/best-practices
+- HumanLayer, *12-Factor Agents* (own your prompts, own your control flow): https://github.com/humanlayer/12-factor-agents
+- Your notes: `vault: ideas/book-sources/discussions/03-claude-code-best-practices`, `vault: ideas/book-sources/discussions/06-12-factor-agents`, `vault: ideas/book-sources/discussions/07-owasp-agentic-top10`
