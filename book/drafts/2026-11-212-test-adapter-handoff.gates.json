@@ -1,0 +1,104 @@
+{
+  "artifact": "book:2026-11-212-test-adapter-handoff",
+  "blocked": [
+    "scrub"
+  ],
+  "channel": "book",
+  "draft": "book/drafts/2026-11-212-test-adapter-handoff.md",
+  "errors": [],
+  "events": [
+    "e21c38ae94b042f7a5a315a322e92f62",
+    "b18dd157893d4a6698cf321f5f02fd3f",
+    "15fdeec01ab1424799d74441e31dab88",
+    "0a8665862ba444258344a6b65867f197",
+    "68ce90c00c50440d9ece1b4e298d0702"
+  ],
+  "gates": {
+    "claims": {
+      "blocking": false,
+      "detail": {
+        "checkable_claims": 7,
+        "sidecar": null,
+        "status": "unverified"
+      },
+      "event": "15fdeec01ab1424799d74441e31dab88",
+      "note": "UNVERIFIED",
+      "pass": false
+    },
+    "distinct": {
+      "blocking": true,
+      "detail": {
+        "status": "not_applicable"
+      },
+      "event": "68ce90c00c50440d9ece1b4e298d0702",
+      "note": "n/a",
+      "pass": true
+    },
+    "numbers": {
+      "blocking": true,
+      "detail": {
+        "figures": 0,
+        "unsupported": []
+      },
+      "event": "0a8665862ba444258344a6b65867f197",
+      "note": "PASS",
+      "pass": true
+    },
+    "scrub": {
+      "blocking": true,
+      "detail": {
+        "counts": {
+          "BLOCK": 0,
+          "OK": 0,
+          "SCRUB": 0,
+          "UNRESOLVED": 1
+        },
+        "register": "blog/clients.json",
+        "scope": "shannon/personal"
+      },
+      "event": "e21c38ae94b042f7a5a315a322e92f62",
+      "full": {
+        "findings": [
+          {
+            "action": "add to clients.clients (with allow_naming + generalization) or to safe_terms if it is not a client",
+            "count": 1,
+            "kind": "unrecognised entity",
+            "match": "GitHub Adapter Test Run",
+            "severity": "UNRESOLVED"
+          }
+        ]
+      },
+      "note": "BLOCK",
+      "pass": false
+    },
+    "voice": {
+      "blocking": false,
+      "detail": {
+        "profile": "blog/voice-profile.json",
+        "words": 433
+      },
+      "event": "b18dd157893d4a6698cf321f5f02fd3f",
+      "full": {
+        "band_flags": [
+          "⚠ 2nd-person/1k 6.9 below your p25 (10.8)",
+          "⚠ avg sentence len 14.9 below your p25 (16.4)"
+        ],
+        "house_style_notes": [],
+        "voice_notes": [
+          "not addressing the reader as 'you'"
+        ]
+      },
+      "pass": true,
+      "score": 76
+    }
+  },
+  "needs_shannon": 1,
+  "ready": false,
+  "scope": "shannon/personal",
+  "state": "needs-fixes",
+  "status": "blocked",
+  "warnings": [
+    "claims"
+  ],
+  "words": 412
+}
