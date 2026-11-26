@@ -1,14 +1,15 @@
 # From prompting to a factory
 
-::: {.callout-note}
-Draft brief, tier A. Bullets and references compiled from source discussions 01–08 (2026-11-16). `[LAB n]`, `[RESEARCH]`, `[PLAN]` and `[VERIFY]` mark what is still open. `vault:` paths point into the Obsidian vault.
-:::
-
-**Outcome:** none yet. `docs/outcomes.md` starts at ch 3. `[PLAN]`
 
 ## The pattern
 - Settle the terms before teaching anything (01, 06):
+
+Before we dive into the book, we need to define a few terms we'll use throughout the book.
+
   - **Agent:** a container that performs one or more tasks reliably, "a highly simplified human" taught tasks over time.
+An agent is a container for one or more tasks: a way to make their execution reliable and repeatable. You can think of it as a highly simplified human being, trained to perform specific tasks over time. The agent is not the task itself, though. The task is carried out through a workflow: the sequence of steps that together accomplish one piece of work.
+
+
   - **Workflow:** the set of steps that together make one task.
   - **Harness:** "the coding agent, agent loop or orchestrator (it's the wrapper around your workflow and prompts and tools)".
   - Say how these differ from Anthropic's definition (code decides the path vs the model decides), so readers of that article aren't confused (01, Claude).
