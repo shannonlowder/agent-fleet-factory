@@ -4,15 +4,14 @@
 ## The pattern
 - Settle the terms before teaching anything (01, 06):
 
-Before we dive into the book, we need to define a few terms we'll use throughout the book.
+Before we dive into the book, we need to define a few terms we'll use throughout.
 
-  - **Agent:** a container that performs one or more tasks reliably, "a highly simplified human" taught tasks over time.
-An agent is a container for one or more tasks: a way to make their execution reliable and repeatable. You can think of it as a highly simplified human being, trained to perform specific tasks over time. The agent is not the task itself, though. The task is carried out through a workflow: the sequence of steps that together accomplish one piece of work.
+An **agent** is a container for one or more tasks: a way to make their execution reliable and repeatable. You can think of it as a highly simplified human being, trained to perform specific tasks over time. The agent is not the task itself, though. The task is carried out through a **workflow**: the sequence of steps that together accomplish one piece of work. If you’re coming from Anthropic’s approach, distinguish those steps from the sessions in which they run: a workflow describes the work, not how its execution is divided across sessions.
 
+The **harness** is the structure that runs that workflow—the wrapper around its prompts, tools, and execution environment. It might take the form of an agent loop or an orchestrator. In these terms, the discrete sessions, fresh context, and continuity through git and progress files described in Anthropic’s approach are harness choices: ways to manage execution and carry state from one session to the next. A versioned, pinned template and an agent-environment-session state machine likewise describe how that machinery is organized, rather than changing what an agent or workflow means here. Put simply, the workflow describes what needs to happen; the harness provides the machinery that makes it happen.
 
-  - **Workflow:** the set of steps that together make one task.
-  - **Harness:** "the coding agent, agent loop or orchestrator (it's the wrapper around your workflow and prompts and tools)".
-  - Say how these differ from Anthropic's definition (code decides the path vs the model decides), so readers of that article aren't confused (01, Claude).
+Anthropic’s definition differs from standard agent frameworks by emphasizing discrete sessions, fresh context, and continuity via git and progress files, while standard frameworks may treat code as the decision-maker rather than the model itself.  Standard agentic workflows explicitly define values to optimize the process, whereas Anthropic’s approach focuses on orchestration and ideation.  Harnesses in standard workflows aim to maximize agency and minimize human cognitive load, whereas Anthropic uses a versioned, pinned template with an agent-environment-session state machine architecture.
+
 - An agent doesn't need a model. The heuristics-only `pr-review` is an agent: "the model is just a tool". Agency is "the ability to go do something without relying on another person" (01).
 - "Agent, agency, etc, they are just this technology's words for automation. the same thing I've built for decades now." (01)
 - What the LLM adds: "the way to handle probabilities and variation", for "the parts of automation that aren't 100% if then, then that" (01).
