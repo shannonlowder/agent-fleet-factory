@@ -13,3 +13,5 @@ Code listings quoted inside the book's text are Apache-2.0 as well, so you can c
 Copyright © 2026 Shannon Lowder.
 
 You may share and adapt the book, including commercially, as long as you credit it: *"[Working name]" by Shannon Lowder, licensed under CC BY 4.0*, with a link to this repository.
+
+Material quoted from other works stays under its own licence. How the book quotes and cites it (including CC BY-SA sources such as the OWASP agentic top 10 and *12-Factor Agents*) is set out in [docs/sourcing.md](docs/sourcing.md).
