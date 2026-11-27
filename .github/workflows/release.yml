@@ -13,6 +13,10 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Landscape page searched within 30 days
+        # docs/sourcing.md rule 6: re-search the landscape before each release (issue 67).
+        run: python3 scripts/check_landscape_date.py
+
       - uses: quarto-dev/quarto-actions/setup@v2
         with:
           tinytex: true

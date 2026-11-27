@@ -1,0 +1,26 @@
+name: scripts
+
+on:
+  pull_request:
+    paths:
+      - "scripts/**"
+      - "docs/landscape.md"
+      - ".github/workflows/scripts.yml"
+  push:
+    branches: [main]
+    paths:
+      - "scripts/**"
+      - "docs/landscape.md"
+      - ".github/workflows/scripts.yml"
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Unit tests
+        working-directory: scripts
+        run: python3 -m unittest -v
+      - name: Landscape date parses
+        # Fails only on a missing or invalid line here; staleness is enforced at release time.
+        run: python3 scripts/check_landscape_date.py --max-age-days 100000
